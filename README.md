@@ -11,12 +11,15 @@ L'application est découpée en 3 services mis dans un réseau Docker :
 
 ### Schéma d'Architecture (Flux)
 
-[ Client (Curl/Browser) ] 
-      │ (Port 3000)
-      ▼
-[ Conteneur API ] ◄───► [ Conteneur PostgreSQL ] (Persistance via pgdata)
-      │           ◄───► [ Conteneur MongoDB ]    (Persistance via mongodata)
-      └───────────────► [ Réseau : reseau_theo ]
+
+                                    |----> SQL : db_postgres (Port 5432)
+                                    |
+               Protocole            |
+                 HTTP               |
+MACHINE CLIENT ---------> API ---------> NoSQL : db_mongo (PORT 27017)
+                                    |
+                                    |
+                                    |-----> Volumes : ici -> pgdata et mongodata
 
 ### Utilisation du projet
 
