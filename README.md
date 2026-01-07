@@ -2,6 +2,13 @@
 
 Ce projet consiste en une API Node.js conteneurisée communiquant avec deux bases de données distinctes (PostgreSQL et MongoDB) pour assurer la persistance des données.
 
+## Prérequis
+
+- Système d'exploitation : Windows 10/11 (avec WSL2), macOS ou Linux.
+- Docker Desktop ou Docker Engine : version 20.10.0 ou supérieure.
+- Docker Compose : version 2.0 ou supérieure (inclus dans Docker Desktop).
+- Git : pour le clonage du dépôt.
+
 ## Architecture du Projet
 
 L'application est découpée en 3 services mis dans un réseau Docker :
