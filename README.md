@@ -26,9 +26,9 @@ MACHINE CLIENT ---------> API ---------> NoSQL : db_mongo (PORT 27017)
                                        │
                  Protocole             │
                    HTTP                │
-- MACHINE CLIENT ─────────▶ API (3000) |
-- (Curl/Browser)                       │
-                                       │
+
+#  MACHINE CLIENT ─────────▶ API (3000) 
+
                                        └───▶ NoSQL : db_mongo (Port 27017) ───▶ Volume: mongodata
 
 ### Utilisation du projet
