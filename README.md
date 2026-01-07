@@ -17,3 +17,16 @@ L'application est découpée en 3 services mis dans un réseau Docker :
 [ Conteneur API ] ◄───► [ Conteneur PostgreSQL ] (Persistance via pgdata)
       │           ◄───► [ Conteneur MongoDB ]    (Persistance via mongodata)
       └───────────────► [ Réseau : reseau_theo ]
+
+### Utilisation du projet
+
+# 1. Cloner le projet
+git clone (avec url fournie dans github)
+cd (nom du repo)
+
+# 2. Configurer l'environnement
+cp .env.example .env
+# Modifiez les variables dans .env si nécessaire
+
+# 3. Lancer l'application
+docker compose up --build -d
