@@ -33,3 +33,22 @@ cp .env.example .env
 
 # 3. Lancer l'application
 docker compose up --build -d
+
+# 4 ajouter un utilisateur (postgres) + verif
+
+curl -X POST http://localhost:3000/profil \
+     -H "Content-Type: application/json" \
+     -d '{"bio": "etudiant en dev", "city": "Paris", "github": "Toto2807"}'
+
+docker exec -it db_pg psql -U postgres -d test_eval -c "SELECT * FROM users;" 
+
+# 5 ajouter un utilisateur (mongo) + verif
+
+curl -X POST http://localhost:3000/profil \                                   
+     -H "Content-Type: application/json" \
+     -d '{"userID": 1, "preferences": ["devops", "kubernetes"], "history": []}'
+
+docker exec -it db_mongo mongosh test_eval --eval "db.profils.find().pretty()"
+
+si jamais votre bdd se nomme différement changer evidement le nom dans les commandes
+De plus si le conteneur est supprimé les volumes reste : à tester avec : "docker compose down" puis tout relancer en suivant le guide depuis l'étape 3.
