@@ -16,10 +16,20 @@ L'application est découpée en 3 services mis dans un réseau Docker :
                                     |
                Protocole            |
                  HTTP               |
-# MACHINE CLIENT ---------> API ---------> NoSQL : db_mongo (PORT 27017)
+MACHINE CLIENT ---------> API ---------> NoSQL : db_mongo (PORT 27017)
                                     |
                                     |
                                     |-----> Volumes : ici -> pgdata et mongodata
+
+                                    
+                                       ┌───▶ SQL : db_postgres (Port 5432) ───▶ Volume: pgdata
+                                       │
+                 Protocole             │
+                   HTTP                │
+- MACHINE CLIENT ─────────▶ API (3000) |
+- (Curl/Browser)                       │
+                                       │
+                                       └───▶ NoSQL : db_mongo (Port 27017) ───▶ Volume: mongodata
 
 ### Utilisation du projet
 
