@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  api:
+    build: .
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    environment:
+      - POSTGRES_URI=${POSTGRES_URI}
+      - MONGO_URL=${MONGO_URL}
+    depends_on:
+      - db_pg
+      - db_mongo
+    networks:
+      - reseau_theo
+
+  db_pg:
+    image: postgres:15-alpine
+    container_name: db_pg
+    env_file:
+      - .env
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - reseau_theo
+
+  db_mongo:
+    image: mongo:latest
+    container_name: db_mongo
+    volumes:
+      - mongodata:/data/db
+    networks:
+      - reseau_theo
+
+networks:
+  reseau_theo:
+    driver: bridge
+
+volumes:
+  pgdata:
+  mongodata:
