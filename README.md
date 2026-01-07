@@ -11,16 +11,6 @@ L'application est découpée en 3 services mis dans un réseau Docker :
 
 ### Schéma d'Architecture (Flux)
 
-
-                                    |----> SQL : db_postgres (Port 5432)
-                                    |
-               Protocole            |
-                 HTTP               |
-MACHINE CLIENT ---------> API ---------> NoSQL : db_mongo (PORT 27017)
-                                    |
-                                    |
-                                    |-----> Volumes : ici -> pgdata et mongodata
-
                                     
                                        ┌───▶ SQL : db_postgres (Port 5432) ───▶ Volume: pgdata
                                        │
