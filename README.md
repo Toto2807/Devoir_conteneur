@@ -59,3 +59,6 @@ docker exec -it db_mongo mongosh test_eval --eval "db.profils.find().pretty()"
 
 si jamais votre bdd se nomme différement changer evidement le nom dans les commandes
 De plus si le conteneur est supprimé les volumes reste : à tester avec : "docker compose down" puis tout relancer en suivant le guide depuis l'étape 3.
+
+
+Projet réalisé par CULLIER Théo
