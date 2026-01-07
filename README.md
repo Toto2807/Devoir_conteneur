@@ -1,8 +1,8 @@
-# 🚀 Projet Évaluation Docker - API Multi-Services
+# Projet Évaluation Docker - API Multi-Services
 
 Ce projet consiste en une API Node.js conteneurisée communiquant avec deux bases de données distinctes (PostgreSQL et MongoDB) pour assurer la persistance des données.
 
-## 🏗️ Architecture du Projet
+## Architecture du Projet
 
 L'application est découpée en 3 services mis dans un réseau Docker :
 - API (Node.js) : Serveur backend gérant la logique métier.
