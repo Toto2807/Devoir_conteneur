@@ -5,7 +5,7 @@ Ce projet consiste en une API Node.js conteneurisée communiquant avec deux base
 ## Architecture du Projet
 
 L'application est découpée en 3 services mis dans un réseau Docker :
-- API (Node.js) : Serveur backend gérant la logique métier.
+- API (Node.js) : Serveur backend.
 - db_pg (PostgreSQL) : Base de données relationnelle pour la gestion des utilisateurs.
 - db_mongo (MongoDB) : Base de données NoSQL pour les profils et préférences.
 
