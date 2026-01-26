@@ -72,6 +72,7 @@ Projet réalisé par CULLIER Théo
 Ce projet consiste en une API Node.js déployée sur un cluster Kubernetes (Docker Desktop / Minikube). L'application assure la persistance des données en communiquant avec deux bases de données distinctes : PostgreSQL et MongoDB.
 
 # Prérequis
+
 Environnement : macOS (Docker Desktop), Windows (WSL2) ou Linux.
 Kubernetes : kubectl installé et un cluster actif (Docker Desktop K8s ou Minikube).
 Docker : Pour le build de l'image si nécessaire.
@@ -87,7 +88,8 @@ Services : Communication interne via ClusterIP et exposition via NodePort (Port 
 
 # Structure des fichiers /k8s
 
-Composant	Fichiers
+Composant	Fichiers :
+
 Global	configmap.yaml
 API	api-deployment.yaml, api-service.yaml
 PostgreSQL	postgres-pvc.yaml, postgres-deployment.yaml, postgres-service.yaml
@@ -105,7 +107,7 @@ kubectl apply -f k8s/
 
 Attendez que tous les pods soient dans l'état Running :
 
-kubectl get pods -w
+kubectl get pods -w /puis faire un "control c" pour sortir
 
 3. Test de connexion (Logs)
 
@@ -120,11 +122,21 @@ L'API est exposée sur le port 30080.
 
 A. Ajouter et vérifier un profil (PostgreSQL)
 
+D'abord vous devez créer la table user : 
+
+kubectl exec -it $(kubectl get pods -l app=postgres -o name) -- psql -U postgres -d user_db -c "
+CREATE TABLE IF NOT EXISTS users (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL
+);"
+
 # Ajout via l'API
 
-curl -X POST http://localhost:30080/profil \
+curl -X POST http://localhost:30080/user \
 -H "Content-Type: application/json" \
--d '{"bio": "étudiant en dev", "city": "Paris", "github": "Toto2807"}'
+-d '{"username":"Theo18", "email":"theo@example.com", "password":"password123"}'
 
 # Vérification directe dans le conteneur Postgres
 
@@ -136,7 +148,11 @@ B. Ajouter et vérifier un profil (MongoDB)
 
 curl -X POST http://localhost:30080/profil \
 -H "Content-Type: application/json" \
--d '{"userID": 1, "preferences": ["devops", "kubernetes"], "history": []}'
+-d '{
+  "userID": 1,
+  "preferences": ["kubernetes", "docker"],
+  "history": []
+}'
 
 # Vérification directe dans le conteneur MongoDB
 
@@ -144,7 +160,9 @@ kubectl exec -it $(kubectl get pods -l app=mongo -o name) -- mongosh ma_db --eva
 
 # Persistance des données
 
-Le service PostgreSQL utilise un PersistentVolumeClaim (PVC). Pour tester la persistance :
+Le service PostgreSQL utilise un PersistentVolumeClaim (PVC). 
+Pour tester la persistance :
+
 Supprimez le déploiement : kubectl delete deployment postgres-deployment
 Relancez-le : kubectl apply -f k8s/postgres-deployment.yaml
 Vos données SQL seront toujours présentes car le volume postgres-pvc n'a pas été supprimé.
