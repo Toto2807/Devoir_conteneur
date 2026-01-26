@@ -129,6 +129,7 @@ curl -X POST http://localhost:30080/profil \
 # Vérification directe dans le conteneur Postgres
 
 kubectl exec -it $(kubectl get pods -l app=postgres -o name) -- psql -U postgres -d user_db -c "SELECT * FROM users;"
+
 B. Ajouter et vérifier un profil (MongoDB)
 
 # Ajout via l'API
